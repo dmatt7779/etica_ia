@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ética en la IA | Presentación Interactiva</title>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;500;800&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg: #050505;
+            --text: #ffffff;
+            --accent: #3b82f6; /* Azul eléctrico */
+            --glass: rgba(255, 255, 255, 0.05);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            font-family: 'Manrope', sans-serif;
+            overflow-x: hidden;
+        }
+
+        /* --- Tipografía --- */
+        h1 { font-size: clamp(3rem, 8vw, 7rem); line-height: 0.9; letter-spacing: -0.03em; margin-bottom: 2rem; }
+        h2 { font-size: clamp(2rem, 5vw, 4rem); letter-spacing: -0.02em; margin-bottom: 2rem; }
+        h3 { font-size: 1.5rem; color: var(--accent); margin-bottom: 1rem; text-transform: uppercase; letter-spacing: 2px; }
+        p { font-size: 1.15rem; line-height: 1.7; color: rgba(255,255,255,0.8); margin-bottom: 1.5rem; font-weight: 300; }
+        strong { color: white; font-weight: 500; }
+
+        /* --- Layout --- */
+        section {
+            position: relative;
+            padding: 10vh 5vw;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* --- Imágenes y Efectos --- */
+        .full-bg-img {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            object-fit: cover;
+            z-index: 0;
+            opacity: 0.3;
+            mask-image: linear-gradient(to bottom, black, transparent);
+            -webkit-mask-image: linear-gradient(to bottom, black, transparent);
+        }
+
+        .img-reveal-wrapper {
+            position: relative;
+            overflow: hidden;
+            border-radius: 8px;
+            margin: 2rem 0;
+        }
+        
+        .img-reveal {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transform: scale(1.2); /* Para efecto zoom-out */
+        }
+
+        /* --- Grid Layouts --- */
+        .split-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .card {
+            background: var(--glass);
+            border: 1px solid rgba(255,255,255,0.1);
+            padding: 2rem;
+            border-radius: 12px;
+            backdrop-filter: blur(10px);
+            transition: transform 0.3s;
+        }
+        .card:hover { transform: translateY(-10px); border-color: var(--accent); }
+
+        /* --- Footer Quote --- */
+        blockquote {
+            font-size: 2rem;
+            font-style: italic;
+            border-left: 4px solid var(--accent);
+            padding-left: 2rem;
+            margin: 3rem 0;
+            color: white;
+        }
+
+        /* Mobile fixes */
+        @media (max-width: 768px) {
+            .split-section { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <section id="hero">
+        <img src="https://images.unsplash.com/photo-1620712943543-bcc4688e7485?q=80&w=1965&auto=format&fit=crop" class="full-bg-img" alt="IA Background">
+        <div class="container">
+            <h1 class="anim-text">PODER DIGITAL<br>& ÉTICA EN LA IA</h1>
+            <div style="max-width: 600px;" class="anim-fade">
+                <p>La Inteligencia Artificial emerge como una aptitud creada con la capacidad de transformar profundamente a la humanidad.</p>
+                <p>Desde asistentes de voz hasta automóviles autónomos, la IA modifica nuestras vidas, pero surgen preocupaciones éticas sobre dignidad, autonomía y justicia.</p>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <div class="container split-section">
+            <div class="anim-slide-right">
+                <h3>Definición</h3>
+                <h2>Más que código,<br>Aprendizaje.</h2>
+                <p>La definición de “inteligencia” es un tema en continuo debate, pero la mayoría incluye la <strong>“capacidad de aprender”</strong>.</p>
+                <p>La diferencia principal entre un sistema desarrollado utilizando IA y un sistema de cómputo tradicional radica en la palabra “aprendizaje”. Mientras los tradicionales siguen reglas fijas, las Redes Neuronales Artificiales (RNA) se entrenan con millones de ejemplos.</p>
+                <p style="font-size: 0.9rem; opacity: 0.6;">Ejemplo: GPT-3 requirió 314 millones de petaFLOPs para entrenarse.</p>
+            </div>
+            <div class="img-reveal-wrapper anim-img-reveal" style="height: 500px;">
+                <img src="https://images.unsplash.com/photo-1677442136019-21780ecad995?q=80&w=1932&auto=format&fit=crop" class="img-reveal" alt="Neural Network">
+            </div>
+        </div>
+    </section>
+
+    <section style="background: #0a0a0a;">
+        <div class="container">
+            <h3>Clasificación</h3>
+            <h2>Los 3 Niveles de IA</h2>
+            <div class="cards-grid">
+                <div class="card anim-up">
+                    <h4 style="font-size: 1.5rem; margin-bottom: 1rem;">1. IA Estrecha (ANI)</h4>
+                    <p>Diseñada para una función específica (ej. jugar Go, reconocer rostros). Es la única que existe hoy. Vence a humanos en su tarea, pero no sabe distinguir un gato si no fue programada para ello.</p>
+                </div>
+                <div class="card anim-up" style="border-top: 4px solid var(--accent);">
+                    <h4 style="font-size: 1.5rem; margin-bottom: 1rem;">2. IA General (IAG)</h4>
+                    <p>Podría llevar a cabo diversas tareas como un humano: conversar, cantar, resolver problemas nuevos. <strong>Este nivel no existe aún.</strong></p>
+                </div>
+                <div class="card anim-up">
+                    <h4 style="font-size: 1.5rem; margin-bottom: 1rem;">3. Superinteligencia</h4>
+                    <p>Un intelecto mucho más listo que los mejores cerebros humanos en creatividad y sabiduría. Podría llevarnos a la "Singularidad".</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <div class="container split-section">
+            <div class="img-reveal-wrapper anim-img-reveal" style="height: 600px; order: 2;">
+                <img src="https://images.unsplash.com/photo-1555431189-0fabf2667795?q=80&w=1974&auto=format&fit=crop" class="img-reveal" alt="Facial Recognition Bias">
+            </div>
+            <div style="order: 1;">
+                <h3>El Debate Ético</h3>
+                <h2>Dignidad vs. Sesgo</h2>
+                
+                <div class="anim-fade">
+                    <p><strong>Sobre la Dignidad:</strong> Un sistema de IA puede reforzar y amplificar sesgos existentes. Por ejemplo, en sistemas de reconocimiento facial se ha demostrado menos precisión para identificar gente con tonos de piel oscuros, derivando en arrestos injustificados.</p>
+                    
+                    <p><strong>Sobre la Autonomía:</strong> Los algoritmos pueden convertirse en sistemas manipuladores. Al mostrarnos solo contenido que refuerza nuestras creencias (redes sociales), limitan nuestra exposición a ideas diversas.</p>
+
+                    <p><strong>Sobre el Bien Común:</strong> La IA debe buscar el bien mayor. Su aplicación en salud es promisoria, pero debe priorizar la privacidad del paciente.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section style="background: linear-gradient(to bottom, #050505, #111);">
+        <div class="container" style="text-align: center;">
+            <h2>Marcos de Referencia</h2>
+            <p>Organismos como la UNESCO, la UE y la NASA proponen:</p>
+            <div class="cards-grid" style="text-align: left;">
+                <div class="card anim-up">✅ Respeto a DDHH y Dignidad</div>
+                <div class="card anim-up">🌍 Cuidado del medioambiente</div>
+                <div class="card anim-up">⚖️ Evitar sesgos discriminatorios</div>
+                <div class="card anim-up">🔒 Derecho a la privacidad</div>
+                <div class="card anim-up">📢 Transparencia y explicabilidad</div>
+                <div class="card anim-up">🛡️ Seguridad y protección</div>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <img src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=2072&auto=format&fit=crop" class="full-bg-img" style="opacity: 0.15;" alt="Future Earth">
+        <div class="container">
+            <h3>Conclusión</h3>
+            <h2>¿Egosistemas o Ecosistemas?</h2>
+            <div class="split-section">
+                <div class="anim-fade">
+                    <p>Retomando a Isaac Asimov ("La receta del tiranosaurio"), podemos vislumbrar dos escenarios: continuar con "egosistemas" que empeoren nuestra situación o desarrollar verdaderos ecosistemas para florecer.</p>
+                    <p>En el futuro positivo, la tecnología abastecerá las necesidades básicas, permitiéndonos mayor tiempo de ocio para la educación y el aprendizaje continuo, no solo para subsistir.</p>
+                </div>
+                <blockquote class="anim-slide-right">
+                    "Participando activamente sobre las implicaciones éticas podemos asegurar un futuro sustentable para todos."
+                </blockquote>
+            </div>
+            <div style="margin-top: 4rem; text-align: center;">
+                <p style="font-size: 0.9rem; opacity: 0.5;">Basado en el texto: "El poder de internet y la industria digital" - Universidad Iberoamericana</p>
+            </div>
+        </div>
+    </section>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.27/bundled/lenis.min.js"></script>
+
+    <script>
+        // 1. Smooth Scroll Setup
+        const lenis = new Lenis()
+        function raf(time) {
+            lenis.raf(time)
+            requestAnimationFrame(raf)
+        }
+        requestAnimationFrame(raf)
+
+        gsap.registerPlugin(ScrollTrigger);
+
+        // 2. Animations
+
+        // Títulos Grandes
+        gsap.from(".anim-text", {
+            y: 100, opacity: 0, duration: 1.5, ease: "power4.out", delay: 0.2
+        });
+
+        // Fade in genérico
+        gsap.utils.toArray('.anim-fade').forEach(element => {
+            gsap.from(element, {
+                scrollTrigger: { trigger: element, start: "top 80%" },
+                y: 30, opacity: 0, duration: 1
+            });
+        });
+
+        // Reveal de Imágenes (Efecto máscara y zoom)
+        gsap.utils.toArray('.anim-img-reveal').forEach(wrapper => {
+            let img = wrapper.querySelector('img');
+            let tl = gsap.timeline({
+                scrollTrigger: { trigger: wrapper, start: "top 75%" }
+            });
+            // La imagen empieza grande y se achica a su tamaño normal (efecto zoom out)
+            tl.from(wrapper, {  scaleY: 0, transformOrigin: "bottom", duration: 1.2, ease: "power3.inOut" })
+              .from(img, { scale: 1.5, duration: 1.2, ease: "power3.inOut" }, "-=1.2");
+        });
+
+        // Cards subiendo en cascada
+        gsap.utils.toArray('.cards-grid').forEach(grid => {
+            gsap.from(grid.children, {
+                scrollTrigger: { trigger: grid, start: "top 80%" },
+                y: 50, opacity: 0, duration: 0.8, stagger: 0.1, ease: "back.out(1.7)"
+            });
+        });
+
+        // Parallax simple para fondos
+        gsap.utils.toArray('.full-bg-img').forEach(bg => {
+            gsap.to(bg, {
+                scrollTrigger: { trigger: bg.parentElement, scrub: true },
+                y: "20%", ease: "none"
+            });
+        });
+
+    </script>
+</body>
+</html>
