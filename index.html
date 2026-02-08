@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -23,26 +22,26 @@
             color: var(--text);
             font-family: 'Manrope', sans-serif;
             overflow-x: hidden;
+            line-height: 1.8;
         }
 
-        /* --- Tipografía Gigante y Elegante --- */
+        /* --- Tipografía --- */
         h1 { font-size: clamp(3rem, 7vw, 8rem); font-weight: 800; line-height: 0.95; letter-spacing: -0.03em; }
-        h2 { font-size: clamp(2.5rem, 5vw, 5rem); font-weight: 600; line-height: 1.1; margin-bottom: 1.5rem; }
-        h3 { font-size: 1.2rem; color: var(--accent); text-transform: uppercase; letter-spacing: 3px; margin-bottom: 1rem; font-weight: 800; }
-        p { font-size: clamp(1.1rem, 1.5vw, 1.5rem); line-height: 1.6; color: rgba(255,255,255,0.8); font-weight: 300; max-width: 700px; }
+        h2 { font-size: clamp(2rem, 4vw, 4.5rem); font-weight: 600; line-height: 1.1; margin-bottom: 1.5rem; }
+        h3 { font-size: 1.1rem; color: var(--accent); text-transform: uppercase; letter-spacing: 3px; margin-bottom: 1rem; font-weight: 800; }
+        p { font-size: clamp(1.1rem, 1.2vw, 1.35rem); color: rgba(255,255,255,0.85); font-weight: 300; max-width: 800px; margin-bottom: 1.5rem; }
         strong { color: white; font-weight: 600; }
         
         .highlight { color: var(--accent); }
 
-        /* --- Estructura SCROLLYTELLING --- */
+        /* --- Estructura --- */
         section {
             width: 100%;
-            min-height: 100vh; /* Usamos min-height para evitar cortes */
+            min-height: 100vh;
             position: relative;
             display: flex;
             align-items: center;
             justify-content: center;
-            /* Quitamos overflow: hidden global para que el pin funcione mejor */
             padding: 0 5vw;
         }
 
@@ -53,73 +52,70 @@
             z-index: 2;
         }
 
-        /* --- Fondos e Imágenes --- */
+        /* --- Fondos --- */
         .bg-image {
             position: absolute;
             top: 0; left: 0; width: 100%; height: 100%;
             object-fit: cover;
-            opacity: 0.4;
+            opacity: 0.3;
             z-index: 0;
-            filter: brightness(0.6) contrast(1.2);
+            filter: brightness(0.5) contrast(1.1);
         }
         
         .overlay {
             position: absolute;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: linear-gradient(to top, var(--bg) 10%, transparent 60%, var(--bg) 90%);
+            background: linear-gradient(to top, var(--bg) 15%, transparent 60%, var(--bg) 85%);
             z-index: 1;
         }
 
-        /* --- Componentes Específicos --- */
+        /* --- Componentes --- */
         
-        /* Sección Niveles (Horizontal Scroll) */
-        #niveles {
-            display: block; /* Importante para el pin horizontal */
-            overflow: hidden;
-        }
-
+        /* Niveles (Horizontal) */
+        #niveles { display: block; overflow: hidden; }
         .levels-container {
             display: flex;
             gap: 5vw;
-            width: fit-content; /* Se adapta al contenido */
+            width: fit-content;
             padding-left: 5vw;
             padding-right: 10vw;
             height: 100vh;
             align-items: center;
         }
         .level-card {
-            width: 80vw;
-            max-width: 600px;
-            flex-shrink: 0; /* Evita que se encojan */
-            background: rgba(20,20,20,0.8);
+            width: 70vw;
+            max-width: 700px;
+            flex-shrink: 0;
+            background: rgba(15,15,15,0.9);
             border: 1px solid rgba(255,255,255,0.1);
-            padding: 4rem;
+            padding: 3rem;
             border-radius: 20px;
-            backdrop-filter: blur(20px);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
         }
 
-        /* Sección Ética (Slides superpuestos) */
+        /* Ética Slides */
         .ethics-slide {
             position: absolute;
             top: 50%; left: 50%;
             transform: translate(-50%, -50%);
-            width: 80%;
+            width: 85%;
+            max-width: 900px;
             text-align: center;
-            opacity: 0; /* Invisible por defecto */
+            opacity: 0;
             pointer-events: none;
-            background: rgba(0,0,0,0.6); /* Fondo semi-transparente para legibilidad */
-            padding: 2rem;
-            border-radius: 20px;
-            backdrop-filter: blur(10px);
+            background: rgba(10,10,10,0.85); 
+            padding: 3rem;
+            border-radius: 24px;
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255,255,255,0.05);
         }
 
-        /* Quotes */
-        blockquote {
-            font-size: 2rem;
-            font-style: italic;
-            border-left: 4px solid var(--accent);
-            padding-left: 2rem;
-            margin: 2rem 0;
+        .data-box {
+            padding: 1.5rem;
+            background: rgba(76, 201, 240, 0.08); 
+            border-left: 3px solid var(--accent); 
+            margin-top: 1.5rem;
+            font-size: 1rem;
         }
 
     </style>
@@ -135,77 +131,35 @@
             <p class="anim-hero" style="margin: 2rem auto;">
                 "Una aptitud creada con la capacidad de transformar profundamente a la humanidad."
             </p>
-            <div style="margin-top: 3rem; opacity: 0.6;" class="anim-hero">↓ Desliza lentamente para explorar</div>
+            <div style="margin-top: 3rem; opacity: 0.6; font-size: 0.9rem;" class="anim-hero">↓ Desliza para leer la historia</div>
         </div>
     </section>
 
     <section id="contexto">
         <img src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?q=80&w=2070&auto=format&fit=crop" class="bg-image" alt="Technology History">
-        <div class="overlay" style="background: rgba(0,0,0,0.8);"></div>
+        <div class="overlay" style="background: rgba(0,0,0,0.85);"></div>
         
         <div class="container text-changer-contexto">
-            <div class="step step-1" style="position: absolute; opacity: 1;">
-                <h3>Contexto Histórico</h3>
-                <h2>De la Imprenta a la IA</h2>
-                <p>Al igual que la imprenta, la máquina de vapor o las telecomunicaciones, la IA emerge como una herramienta histórica.</p>
-            </div>
-            <div class="step step-2" style="position: absolute; opacity: 0; transform: translateY(50px);">
-                <h3>Impacto Profundo</h3>
-                <h2>Transformación Diaria</h2>
-                <p>Desde asistentes de voz hasta automóviles autónomos, la IA modifica día a día cómo vivimos, trabajamos y nos comunicamos.</p>
-            </div>
-            <div class="step step-3" style="position: absolute; opacity: 0; transform: translateY(50px);">
-                <h3>El Dilema</h3>
-                <h2>Preocupaciones Éticas</h2>
-                <p>Surgen preocupaciones sobre dignidad humana, autonomía, privacidad y justicia social.</p>
-            </div>
-        </div>
-    </section>
-
-    <section id="definicion" style="background: #0a0a0a;">
-        <div class="container" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 4rem; align-items: center;">
-            <div>
-                <h3>Definición Técnica</h3>
-                <h2>Más que Código:<br><span class="highlight">Aprendizaje</span></h2>
-                <p>La diferencia radical con el cómputo tradicional es el <strong>"Aprendizaje"</strong>.</p>
-                <br>
-                <p>Los sistemas tradicionales siguen reglas fijas. Las Redes Neuronales (RNA) se entrenan con millones de ejemplos creando matrices numéricas.</p>
-                <br>
-                <div style="padding: 1.5rem; background: rgba(255,255,255,0.05); border-left: 3px solid var(--accent-2); margin-top: 2rem;">
-                    <strong>El dato: GPT-3</strong><br>
-                    Este modelo contiene 175 mil millones de valores y requirió 314 millones de petaFLOPs para entrenarse.
-                </div>
-            </div>
-            <div class="img-wrapper" style="height: 60vh; overflow: hidden; border-radius: 20px;">
-                <img src="https://images.unsplash.com/photo-1620825937374-87fc7d6bddc2?q=80&w=1932&auto=format&fit=crop" style="width: 100%; height: 100%; object-fit: cover;" alt="Neural Matrix">
-            </div>
-        </div>
-    </section>
-
-    <section id="niveles">
-        <div style="position: absolute; top: 10vh; left: 5vw; z-index: 5;">
-            <h3>Clasificación</h3>
-            <h2>Los 3 Niveles de Inteligencia</h2>
-            <p style="font-size: 0.9rem; opacity: 0.6;">(Sigue bajando para deslizar)</p>
-        </div>
-        
-        <div class="levels-container">
-            <div class="level-card">
-                <h1 style="color: rgba(255,255,255,0.1);">01</h1>
-                <h3>IA Especializada (ANI)</h3>
-                <p><strong>Diseñada para una función específica.</strong> Es la única que existe hoy (ej. jugar Go, reconocimiento facial). Puede vencer a humanos en su tarea, pero no sabe hacer nada más.</p>
-            </div>
             
-            <div class="level-card" style="border-color: var(--accent);">
-                <h1 style="color: rgba(76, 201, 240, 0.1);">02</h1>
-                <h3>IA General (IAG)</h3>
-                <p><strong>Emulación Humana.</strong> Podría conversar, aprender, cantar y resolver problemas nuevos como un humano. Este nivel NO existe aún y no sabemos cuándo llegará.</p>
+            <div class="step step-1" style="position: absolute; opacity: 1;">
+                <h3>01. Evolución Tecnológica</h3>
+                <h2>De la Máquina de Vapor a la IA</h2>
+                <p>Tal como sucedió con la imprenta, la máquina de vapor o las telecomunicaciones, la Inteligencia Artificial emerge hoy como una "aptitud creada" por el ser humano.</p>
+                <p>Tiene la capacidad histórica de transformar profundamente nuestra civilización, redefiniendo las herramientas que usamos para mejorar nuestras aptitudes naturales.</p>
             </div>
 
-            <div class="level-card" style="border-color: var(--accent-2);">
-                <h1 style="color: rgba(114, 9, 183, 0.1);">03</h1>
-                <h3>Superinteligencia</h3>
-                <p><strong>La Singularidad.</strong> Un intelecto mucho más listo que los mejores cerebros humanos en creatividad y sabiduría (Nick Bostrom). Plantea riesgos de control total.</p>
+            <div class="step step-2" style="position: absolute; opacity: 0; transform: translateY(50px);">
+                <h3>02. Transformación Diaria</h3>
+                <h2>Integración Total</h2>
+                <p>Desde los primeros asistentes de voz y chatbots, hasta los complejos automóviles autónomos, la IA modifica día a día cómo vivimos, trabajamos y nos comunicamos.</p>
+                <p>Ya no es ciencia ficción: se está integrando cada vez más en la estructura fundamental de nuestra rutina diaria y laboral.</p>
+            </div>
+
+            <div class="step step-3" style="position: absolute; opacity: 0; transform: translateY(50px);">
+                <h3>03. El Dilema</h3>
+                <h2>Sofisticación vs. Ética</h2>
+                <p>Sin embargo, surge una paradoja: mientras los sistemas se vuelven más sofisticados y omnipresentes, crecen las preocupaciones éticas críticas.</p>
+                <p>Nos enfrentamos a retos urgentes sobre la <strong>dignidad humana, la autonomía, la discriminación, la privacidad y la justicia social</strong> que requieren reglas claras.</p>
             </div>
         </div>
     </section>
@@ -216,37 +170,95 @@
         <div class="container" style="position: relative; height: 100vh;">
             
             <div class="ethics-slide slide-1">
-                <img src="https://images.unsplash.com/photo-1555431189-0fabf2667795?q=80&w=1974&auto=format&fit=crop" style="width: 300px; border-radius: 10px; margin-bottom: 2rem; opacity: 0.8;" alt="Face Scan">
-                <h2>1. Dignidad y Sesgos</h2>
-                <p>La IA puede amplificar inequidades. En sistemas de reconocimiento facial (EE.UU.) se demostró menos precisión con pieles oscuras, derivando en <strong>arrestos injustificados</strong>.</p>
+                <h3 style="color: #ff6b6b;">Riesgo Ético 1</h3>
+                <h2>Dignidad y Sesgos Algorítmicos</h2>
+                <p>La IA puede reforzar y amplificar inequidades sociales existentes. Un caso alarmante ocurrió con sistemas de <strong>reconocimiento facial en EE.UU.</strong>, que mostraron menos precisión para identificar personas con tonos de piel oscuros.</p>
+                <p><strong>La consecuencia:</strong> Falsos positivos que derivaron en arrestos erróneos e injustificados, vulnerando la dignidad humana. Del mismo modo, algoritmos de contratación pueden perpetuar sesgos raciales o de género si se entrenan con datos históricos sesgados.</p>
             </div>
 
             <div class="ethics-slide slide-2">
-                <h1 style="font-size: 5rem;">🕸️</h1>
-                <h2>2. Autonomía y Libertad</h2>
-                <p>Peligro de manipulación tecnológica. Los algoritmos de redes sociales nos muestran solo lo que refuerza nuestras creencias ("filtros burbuja"), limitando nuestra visión del mundo.</p>
+                <h3 style="color: var(--accent);">Riesgo Ético 2</h3>
+                <h2>Autonomía y Manipulación</h2>
+                <p>La IA puede enriquecernos, pero también convertirse en un sistema manipulador a través de la tecnología persuasiva. Los algoritmos de redes sociales suelen mostrarnos solo contenidos que refuerzan nuestras creencias.</p>
+                <p><strong>El efecto "Filtro Burbuja":</strong> Esto nos oculta puntos de vista opuestos, creando visiones cortas y sesgadas que limitan nuestra exposición a ideas diversas, dificultando la toma de decisiones libre e informada.</p>
             </div>
 
             <div class="ethics-slide slide-3">
-                <h1 style="font-size: 5rem;">🌍</h1>
-                <h2>3. El Bien Común</h2>
-                <p>La IA debe buscar el "bien mayor". Ejemplo positivo: Sistemas de salud que reducen costos y aumentan el acceso, siempre que cuiden la privacidad.</p>
+                <h3 style="color: #51cf66;">Propósito Ético</h3>
+                <h2>El Bien Común y la Salud</h2>
+                <p>La IA debe diseñarse para buscar el "bien mayor" que alcance a más personas, no solo a intereses privados. Un ejemplo prometedor es su aplicación en <strong>sistemas de salud</strong>.</p>
+                <p>Tiene el potencial de reducir costos drásticamente e incrementar el acceso a servicios médicos para más gente. Sin embargo, esto debe hacerse priorizando estrictamente la privacidad y confidencialidad de los pacientes.</p>
             </div>
 
         </div>
     </section>
 
-    <section id="marcos" style="height: auto; padding: 10rem 5vw;">
-        <div class="container">
-            <h2>Marcos de Referencia</h2>
-            <p style="margin-bottom: 3rem;">Propuestos por UNESCO, Unión Europea y NASA:</p>
+    <section id="definicion" style="background: #050505;">
+        <div class="container" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 5rem; align-items: center;">
+            <div>
+                <h3>Definición Técnica</h3>
+                <h2>La Clave es el <span class="highlight">Aprendizaje</span></h2>
+                <p>La diferencia radical con el cómputo tradicional radica en una palabra: <strong>"Aprendizaje"</strong>. Mientras el software clásico sigue reglas fijas del programador, la IA usa estructuras (Redes Neuronales) que se entrenan con datos.</p>
+                
+                <div class="data-box">
+                    <strong>Dato Técnico 1: El Cerebro de GPT-3</strong><br>
+                    Este sistema contiene <strong>175 mil millones de valores</strong> (parámetros) en sus matrices numéricas.
+                </div>
+
+                <div class="data-box" style="border-color: var(--accent-2); background: rgba(114, 9, 183, 0.08);">
+                    <strong>Dato Técnico 2: Poder de Cómputo</strong><br>
+                    Para entrenar este modelo se requirieron <strong>314 millones de petaFLOPs</strong> (operaciones de punto flotante). Una capacidad de procesamiento masiva.
+                </div>
+            </div>
+            <div class="img-wrapper" style="height: 60vh; overflow: hidden; border-radius: 20px; box-shadow: 0 0 30px rgba(255,255,255,0.05);">
+                <img src="https://images.unsplash.com/photo-1620825937374-87fc7d6bddc2?q=80&w=1932&auto=format&fit=crop" style="width: 100%; height: 100%; object-fit: cover;" alt="Neural Matrix">
+            </div>
+        </div>
+    </section>
+
+    <section id="niveles">
+        <div style="position: absolute; top: 10vh; left: 5vw; z-index: 5;">
+            <h3>Clasificación</h3>
+            <h2>Los 3 Niveles de Inteligencia</h2>
+            <p style="font-size: 0.9rem; opacity: 0.6;">(Desliza hacia abajo para navegar horizontalmente)</p>
+        </div>
+        
+        <div class="levels-container">
+            <div class="level-card">
+                <h1 style="color: rgba(255,255,255,0.1); margin-bottom: 0;">01</h1>
+                <h3 style="margin-top: 0;">IA Especializada (ANI)</h3>
+                <p><strong>Diseñada para una función específica.</strong> Es la única que existe hoy (ej. jugar Go, reconocimiento facial, traductores). Puede vencer a los mejores humanos en su disciplina específica, pero es incapaz de distinguir un perro de un gato si no fue diseñada para ello.</p>
+            </div>
             
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem;">
-                <div style="border-top: 1px solid white; padding-top: 1rem;">✅ Respeto a DDHH y Dignidad</div>
-                <div style="border-top: 1px solid white; padding-top: 1rem;">🌳 Cuidado del medioambiente</div>
-                <div style="border-top: 1px solid white; padding-top: 1rem;">⚖️ Evitar sesgos discriminatorios</div>
-                <div style="border-top: 1px solid white; padding-top: 1rem;">🔒 Privacidad y protección de datos</div>
-                <div style="border-top: 1px solid white; padding-top: 1rem;">📢 Transparencia y explicabilidad</div>
+            <div class="level-card" style="border-color: var(--accent);">
+                <h1 style="color: rgba(76, 201, 240, 0.1); margin-bottom: 0;">02</h1>
+                <h3 style="margin-top: 0;">IA General (IAG)</h3>
+                <p><strong>Emulación Humana Completa.</strong> Este tipo podría llevar a cabo diversas tareas como un humano: reconocer rostros, entender lenguaje natural, mantener una conversación, contar chistes y resolver problemas nuevos.</p>
+                <p style="font-size: 0.9rem; opacity: 0.7; margin-top: 1rem;">* Este nivel NO existe aún y no sabemos cuánto falta para lograrlo.</p>
+            </div>
+
+            <div class="level-card" style="border-color: var(--accent-2);">
+                <h1 style="color: rgba(114, 9, 183, 0.1); margin-bottom: 0;">03</h1>
+                <h3 style="margin-top: 0;">Superinteligencia</h3>
+                <p><strong>La Singularidad.</strong> Un intelecto mucho más listo que los mejores cerebros humanos en todos los campos, incluyendo creatividad y sabiduría (Nick Bostrom).</p>
+                <p>Genera inquietud sobre si conducirá a nuestra destrucción o a un mundo utópico. ¿Será buena o mala?.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="marcos" style="height: auto; padding: 10rem 5vw; background: #080808;">
+        <div class="container">
+            <h3 style="text-align: center;">Regulación</h3>
+            <h2 style="text-align: center; margin-bottom: 4rem;">Marcos de Referencia Éticos</h2>
+            <p style="text-align: center; margin-bottom: 3rem; max-width: 100%;">Principios propuestos por la UNESCO, la Unión Europea y la NASA:</p>
+            
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem;">
+                <div style="padding: 2rem; border: 1px solid rgba(255,255,255,0.1); border-radius: 12px;">✅ Respeto a los Derechos Humanos y dignidad.</div>
+                <div style="padding: 2rem; border: 1px solid rgba(255,255,255,0.1); border-radius: 12px;">🌳 Cuidado del medioambiente y sostenibilidad.</div>
+                <div style="padding: 2rem; border: 1px solid rgba(255,255,255,0.1); border-radius: 12px;">⚖️ Evitar sesgos discriminatorios (inclusión).</div>
+                <div style="padding: 2rem; border: 1px solid rgba(255,255,255,0.1); border-radius: 12px;">🔒 Derecho a la privacidad y protección de datos.</div>
+                <div style="padding: 2rem; border: 1px solid rgba(255,255,255,0.1); border-radius: 12px;">📢 Transparencia y explicabilidad (Caja negra).</div>
+                <div style="padding: 2rem; border: 1px solid rgba(255,255,255,0.1); border-radius: 12px;">🛡️ Seguridad y responsabilidad compartida.</div>
             </div>
         </div>
     </section>
@@ -255,26 +267,28 @@
         <img src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=2072&auto=format&fit=crop" class="bg-image" style="opacity: 0.2;" alt="Future Earth">
         <div class="container" style="text-align: center;">
             <h3>Visión de Futuro</h3>
-            <h2 style="font-size: clamp(3rem, 6vw, 6rem);">¿Egosistemas o <span class="highlight" style="color: #4cc9f0;">Ecosistemas</span>?</h2>
+            <h2 style="font-size: clamp(3rem, 5vw, 6rem);">¿Egosistemas o <span class="highlight" style="color: #4cc9f0;">Ecosistemas</span>?</h2>
             
             <div style="display: flex; justify-content: center; gap: 4rem; margin-top: 4rem; flex-wrap: wrap;">
-                <div style="flex: 1; min-width: 300px; text-align: right; border-right: 1px solid gray; padding-right: 2rem;">
-                    <h4 style="color: #ff4d4d;">Escenario Negativo</h4>
-                    <p style="margin-left: auto;">Continuar con "egosistemas" que empeoren nuestra situación a grados extremos.</p>
+                <div style="flex: 1; min-width: 300px; text-align: right; border-right: 1px solid rgba(255,255,255,0.3); padding-right: 2rem;">
+                    <h4 style="color: #ff4d4d; font-size: 1.5rem;">Escenario Negativo</h4>
+                    <p style="margin-left: auto;">No entender nuestras capacidades y continuar con "egosistemas" que empeoren nuestra situación a grados extremos.</p>
                 </div>
                 <div style="flex: 1; min-width: 300px; text-align: left; padding-left: 2rem;">
-                    <h4 style="color: #4cc9f0;">Escenario Positivo (Asimov)</h4>
-                    <p style="margin-right: auto;">La tecnología cubre necesidades básicas, permitiendo tiempo de ocio para la educación y el crecimiento humano.</p>
+                    <h4 style="color: #4cc9f0; font-size: 1.5rem;">Escenario Positivo</h4>
+                    <p style="margin-right: auto;">Desarrollar verdaderos ecosistemas que nos permitan florecer como humanidad.</p>
                 </div>
             </div>
 
-            <blockquote style="margin-top: 5rem; border: none; font-size: 1.5rem;">
-                "Participar activamente en la ética de la IA asegura un futuro sustentable para todos."
-            </blockquote>
+            <div style="margin-top: 5rem; max-width: 800px; margin-left: auto; margin-right: auto; background: rgba(255,255,255,0.05); padding: 3rem; border-radius: 20px;">
+                <h3 style="color: white; margin-bottom: 1rem;">Reflexión Final</h3>
+                <p>Como sugería Isaac Asimov, en un futuro positivo la tecnología evolucionará para <strong>abastecer las necesidades básicas</strong> del ser humano.</p>
+                <p>Esto nos permitiría tener mayor tiempo de ocio para buscar, a través de la educación, actividades que nos motiven y den sentido, en lugar de vivir preocupados únicamente por un medio inmediato de subsistencia.</p>
+            </div>
             
-            <footer style="margin-top: 5rem; font-size: 0.8rem; opacity: 0.5;">
+            <footer style="margin-top: 5rem; font-size: 0.8rem; opacity: 0.5; padding-bottom: 2rem;">
                 Basado en el texto: "El poder de internet y la industria digital" - Universidad Iberoamericana<br>
-                Licenciatura en Ingeniería en Ciencia de Datos
+                Licenciatura en Ingeniería en Ciencia de Datos.
             </footer>
         </div>
     </section>
@@ -285,11 +299,9 @@
     <script src="https://unpkg.com/lenis@1.0.45/dist/lenis.min.js"></script>
 
     <script>
-        // 1. REGISTRO DE PLUGINS
         gsap.registerPlugin(ScrollTrigger);
 
-        // 2. CONFIGURACIÓN DEL SCROLL SUAVE (LENIS)
-        // Esta configuración asegura la comunicación entre el scroll suave y las animaciones
+        // 1. SCROLL SUAVE
         const lenis = new Lenis({
             duration: 1.5,
             easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
@@ -297,26 +309,22 @@
         });
 
         lenis.on('scroll', ScrollTrigger.update);
-
-        gsap.ticker.add((time) => {
-            lenis.raf(time * 1000);
-        });
-
+        gsap.ticker.add((time) => lenis.raf(time * 1000));
         gsap.ticker.lagSmoothing(0);
 
-        // 3. ANIMACIONES
+        // 2. ANIMACIONES
 
         // A. HERO
         gsap.from(".anim-hero", {
             y: 50, opacity: 0, duration: 1.5, stagger: 0.2, ease: "power3.out", delay: 0.5
         });
 
-        // B. CONTEXTO HISTÓRICO (Pinned Sequence)
+        // B. CONTEXTO HISTÓRICO
         const tlContext = gsap.timeline({
             scrollTrigger: {
                 trigger: "#contexto",
                 start: "top top",
-                end: "+=2000",
+                end: "+=4000",
                 pin: true,
                 scrub: 1,
                 anticipatePin: 1
@@ -324,16 +332,33 @@
         });
 
         tlContext
-            .to(".step-1", { opacity: 0, y: -50, duration: 1 }) 
-            .to(".step-2", { opacity: 1, y: 0, duration: 1 })
-            .to(".step-2", { opacity: 0, y: -50, duration: 1, delay: 0.5 }) 
-            .to(".step-3", { opacity: 1, y: 0, duration: 1 });
+            .to(".step-1", { opacity: 0, y: -50, duration: 2 })
+            .to(".step-2", { opacity: 1, y: 0, duration: 2 })
+            .to(".step-2", { opacity: 0, y: -50, duration: 2, delay: 1.5 })
+            .to(".step-3", { opacity: 1, y: 0, duration: 2 });
 
 
-        // C. NIVELES (Horizontal Scroll)
-        // Calculamos el movimiento horizontal basado en el ancho real
+        // C. ÉTICA (AHORA DESPUÉS DEL CONTEXTO)
+        const tlEthics = gsap.timeline({
+            scrollTrigger: {
+                trigger: "#etica",
+                start: "top top",
+                end: "+=5000",
+                pin: true,
+                scrub: true
+            }
+        });
+
+        tlEthics
+            .to(".slide-1", { opacity: 1, scale: 1, duration: 2 })
+            .to(".slide-1", { opacity: 0, scale: 0.9, filter: "blur(5px)", duration: 2, delay: 4 })
+            .to(".slide-2", { opacity: 1, scale: 1, duration: 2 })
+            .to(".slide-2", { opacity: 0, scale: 0.9, filter: "blur(5px)", duration: 2, delay: 4 })
+            .to(".slide-3", { opacity: 1, scale: 1, duration: 2 });
+
+
+        // D. NIVELES (Horizontal)
         const sectionsContainer = document.querySelector(".levels-container");
-        
         gsap.to(sectionsContainer, {
             x: () => -(sectionsContainer.scrollWidth - window.innerWidth),
             ease: "none",
@@ -346,24 +371,6 @@
                 invalidateOnRefresh: true
             }
         });
-
-        // D. ÉTICA (Tarjetas apiladas)
-        const tlEthics = gsap.timeline({
-            scrollTrigger: {
-                trigger: "#etica",
-                start: "top top",
-                end: "+=3000",
-                pin: true,
-                scrub: true
-            }
-        });
-
-        tlEthics
-            .to(".slide-1", { opacity: 1, scale: 1, duration: 1 })
-            .to(".slide-1", { opacity: 0, scale: 0.8, filter: "blur(10px)", duration: 1, delay: 1 })
-            .to(".slide-2", { opacity: 1, scale: 1, duration: 1 })
-            .to(".slide-2", { opacity: 0, scale: 0.8, filter: "blur(10px)", duration: 1, delay: 1 })
-            .to(".slide-3", { opacity: 1, scale: 1, duration: 1 });
 
     </script>
 </body>
