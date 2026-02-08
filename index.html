@@ -236,6 +236,146 @@
             }
         }
 
+        /* --- JUEGO DRAG & DROP MEJORADO --- */
+        #actividad {
+            flex-direction: column;
+            padding-top: 5rem;
+            padding-bottom: 5rem;
+            background: #050505;
+        }
+
+        .game-board {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            width: 100%;
+            margin-top: 3rem;
+        }
+
+        .drop-zone {
+            background: rgba(255,255,255,0.02);
+            border: 2px dashed rgba(255,255,255,0.2);
+            border-radius: 15px;
+            padding: 2rem;
+            min-height: 300px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+        
+        .drop-zone h4 {
+            margin-bottom: 1.5rem;
+            font-size: 1.2rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            pointer-events: none;
+        }
+
+        .drop-zone.hovered {
+            border-color: var(--accent);
+            background: rgba(76, 201, 240, 0.05);
+            transform: scale(1.02);
+            box-shadow: 0 0 20px rgba(76, 201, 240, 0.2);
+        }
+
+        .draggable-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            justify-content: center;
+            margin-bottom: 3rem;
+            min-height: 80px;
+            padding: 1rem;
+            border-radius: 20px;
+            background: rgba(255,255,255,0.01); /* Sutil fondo para delimitar área */
+        }
+
+        .draggable-item {
+            padding: 1rem 2rem;
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 50px;
+            cursor: grab;
+            font-weight: 600;
+            font-size: 0.9rem;
+            user-select: none;
+            touch-action: none;
+            transition: transform 0.2s, background-color 0.2s;
+            position: relative;
+            z-index: 10;
+        }
+
+        .draggable-item:active {
+            cursor: grabbing;
+            transform: scale(1.1);
+            background: var(--accent);
+            color: black;
+            border-color: var(--accent);
+            box-shadow: 0 0 15px var(--accent);
+        }
+
+        .draggable-item.correct {
+            background: var(--success);
+            color: black;
+            border-color: var(--success);
+            cursor: default;
+            box-shadow: 0 0 10px var(--success);
+        }
+
+        .draggable-item.incorrect {
+            animation: shake 0.4s;
+            background: var(--error);
+            border-color: var(--error);
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+
+        /* --- MENSAJE DE VICTORIA MEJORADO --- */
+        #victory-message {
+            display: none; /* Oculto por defecto */
+            text-align: center;
+            margin-top: 3rem;
+            padding: 3rem;
+            background: rgba(0, 255, 136, 0.1);
+            border: 2px solid var(--success);
+            border-radius: 24px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 0 40px rgba(0, 255, 136, 0.15);
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .btn-reset {
+            margin-top: 2rem;
+            padding: 1rem 2.5rem;
+            background: var(--success);
+            color: #000;
+            border: none;
+            border-radius: 50px;
+            font-weight: 800;
+            font-size: 1rem;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-reset:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 255, 136, 0.4);
+            background: #fff;
+        }
+
+        @media (max-width: 768px) {
+            .game-board { grid-template-columns: 1fr; }
+            .drop-zone { min-height: 150px; }
+        }
     </style>
 </head>
 <body>
@@ -374,7 +514,7 @@
             <h2>Conecta el Concepto</h2>
             <p>Arrastra los conceptos de arriba a su categoría correcta abajo.</p>
 
-            <div class="draggable-container">
+            <div class="draggable-container" id="source-container">
                 <div class="draggable-item" data-category="riesgo">Sesgos Raciales</div>
                 <div class="draggable-item" data-category="nivel">ANI (Especializada)</div>
                 <div class="draggable-item" data-category="futuro">Ecosistemas Humanos</div>
@@ -396,8 +536,9 @@
             </div>
 
             <div id="victory-message">
-                <h2 style="color: var(--success);">¡Excelente! 🎉</h2>
-                <p>Has comprendido perfectamente los desafíos y oportunidades de la IA.</p>
+                <h2 style="color: var(--success); font-size: 2.5rem; margin-bottom: 1rem;">¡Excelente! 🎉</h2>
+                <p style="font-size: 1.2rem; margin: 0 auto; color: white;">Has dominado los conceptos clave de la ética en la IA.</p>
+                <button class="btn-reset" onclick="resetGame()">Jugar de Nuevo</button>
             </div>
         </div>
     </section>
@@ -439,7 +580,7 @@
     <script>
         gsap.registerPlugin(ScrollTrigger);
 
-        // --- 1. CONFIGURACIÓN SCROLL ---
+        // --- 1. SCROLL SUAVE ---
         const lenis = new Lenis({
             duration: 1.5,
             easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
@@ -449,17 +590,15 @@
         gsap.ticker.add((time) => lenis.raf(time * 1000));
         gsap.ticker.lagSmoothing(0);
 
-        // --- 2. ANIMACIONES SCROLLYTELLING ---
-        
-        // Hero
+        // --- 2. ANIMACIONES ---
         gsap.from(".anim-hero", { y: 50, opacity: 0, duration: 1.5, stagger: 0.2, ease: "power3.out", delay: 0.5 });
 
-        // Contexto
+        // Contexto (Lento)
         const tlContext = gsap.timeline({
             scrollTrigger: { trigger: "#contexto", start: "top top", end: "+=7000", pin: true, scrub: 1, anticipatePin: 1 }
         });
         tlContext
-            .to(".step-1", { opacity: 0, y: -50, duration: 6 }) 
+            .to(".step-1", { opacity: 0, y: -50, duration: 6 })
             .to(".step-2", { opacity: 1, y: 0, duration: 6 }, "-=2")
             .to(".step-2", { opacity: 0, y: -50, duration: 6, delay: 5 })
             .to(".step-3", { opacity: 1, y: 0, duration: 6 }, "-=2");
@@ -490,43 +629,34 @@
             }
         });
 
-        // --- 3. LÓGICA DEL JUEGO DRAG AND DROP (Universal: Touch & Mouse) ---
+        // --- 3. LÓGICA DEL JUEGO (CORREGIDA PARA QUE NO DESAPAREZCA) ---
         
         const draggables = document.querySelectorAll('.draggable-item');
         const dropZones = document.querySelectorAll('.drop-zone');
         let activeItem = null;
-        let originalParent = null;
 
-        // Función para inicializar eventos
         draggables.forEach(item => {
-            // Eventos Mouse
             item.addEventListener('mousedown', startDrag);
-            // Eventos Touch (Móvil)
             item.addEventListener('touchstart', startDrag, {passive: false});
         });
 
         function startDrag(e) {
-            if (e.target.classList.contains('correct')) return; // Ya no se puede mover si está correcto
-            e.preventDefault(); // Evitar scroll en touch
+            if (e.target.classList.contains('correct')) return;
+            if (e.type === 'touchstart') e.preventDefault();
 
             activeItem = e.target;
-            
-            // Posición inicial para calcular movimiento
             const touch = e.touches ? e.touches[0] : e;
             const rect = activeItem.getBoundingClientRect();
             
-            // Diferencia entre el toque y la esquina del elemento
             activeItem.offsetX = touch.clientX - rect.left;
             activeItem.offsetY = touch.clientY - rect.top;
 
-            // Preparar elemento para moverse libremente
             activeItem.style.position = 'fixed';
             activeItem.style.zIndex = '1000';
-            activeItem.style.width = rect.width + 'px'; // Mantener tamaño
+            activeItem.style.width = rect.width + 'px'; 
             
             moveAt(touch.clientX, touch.clientY);
 
-            // Añadir listeners globales para mover y soltar
             document.addEventListener('mousemove', onMove);
             document.addEventListener('mouseup', onStop);
             document.addEventListener('touchmove', onMove, {passive: false});
@@ -540,28 +670,21 @@
         }
 
         function onMove(e) {
-            e.preventDefault();
+            if (e.type === 'touchmove') e.preventDefault();
             const touch = e.touches ? e.touches[0] : e;
             moveAt(touch.clientX, touch.clientY);
             
-            // Detectar hover sobre zona (feedback visual)
-            activeItem.style.visibility = 'hidden'; // Ocultar temp para ver qué hay debajo
+            activeItem.style.visibility = 'hidden';
             let elemBelow = document.elementFromPoint(touch.clientX, touch.clientY);
             activeItem.style.visibility = 'visible';
 
             if (!elemBelow) return;
-
             let dropZone = elemBelow.closest('.drop-zone');
-            
-            // Limpiar hovers anteriores
             dropZones.forEach(zone => zone.classList.remove('hovered'));
-            if (dropZone) {
-                dropZone.classList.add('hovered');
-            }
+            if (dropZone) dropZone.classList.add('hovered');
         }
 
         function onStop(e) {
-            // Limpiar listeners
             document.removeEventListener('mousemove', onMove);
             document.removeEventListener('mouseup', onStop);
             document.removeEventListener('touchmove', onMove);
@@ -570,8 +693,6 @@
             if (!activeItem) return;
 
             const touch = e.changedTouches ? e.changedTouches[0] : e;
-            
-            // Detectar dónde se soltó
             activeItem.style.visibility = 'hidden';
             let elemBelow = document.elementFromPoint(touch.clientX, touch.clientY);
             activeItem.style.visibility = 'visible';
@@ -579,65 +700,70 @@
             let dropZone = elemBelow ? elemBelow.closest('.drop-zone') : null;
             dropZones.forEach(zone => zone.classList.remove('hovered'));
 
-            // Lógica de validación
             if (dropZone) {
                 const itemCategory = activeItem.getAttribute('data-category');
                 const zoneCategory = dropZone.getAttribute('data-category');
-
                 if (itemCategory === zoneCategory) {
-                    // CORRECTO
                     successDrop(activeItem, dropZone);
                 } else {
-                    // INCORRECTO
                     returnToStart(activeItem);
                 }
             } else {
-                // SOLTADO EN LA NADA
                 returnToStart(activeItem);
             }
-            
             activeItem = null;
         }
 
         function successDrop(item, zone) {
-            // Resetear estilos fijos
             item.style.position = 'static';
             item.style.zIndex = '10';
             item.style.width = 'auto';
             item.classList.add('correct');
-            
-            // Mover al DOM de la zona
             zone.appendChild(item);
             
-            // Animación de éxito
             gsap.from(item, {scale: 0.5, duration: 0.3, ease: "back.out(1.7)"});
-
             checkVictory();
         }
 
         function returnToStart(item) {
             item.classList.add('incorrect');
-            
-            // Regresar a posición original (simulado visualmente)
-            // Para simplificar, reseteamos estilos y el DOM lo vuelve a poner en su lugar
             item.style.position = 'static';
             item.style.zIndex = '10';
             item.style.width = 'auto';
-
-            setTimeout(() => {
-                item.classList.remove('incorrect');
-            }, 500);
+            setTimeout(() => item.classList.remove('incorrect'), 500);
         }
 
         function checkVictory() {
-            const totalItems = 6; // Total de elementos
+            const totalItems = 6;
             const correctItems = document.querySelectorAll('.draggable-item.correct').length;
             
             if (correctItems === totalItems) {
-                document.getElementById('victory-message').style.display = 'block';
-                // Confeti simple con GSAP (opcional)
-                gsap.to("#victory-message", {y: -10, repeat: -1, yoyo: true, duration: 0.5});
+                const msg = document.getElementById('victory-message');
+                msg.style.display = 'block';
+                // Animación de entrada sólida y sin rebotes infinitos
+                gsap.fromTo(msg, 
+                    {y: 50, opacity: 0, scale: 0.9}, 
+                    {y: 0, opacity: 1, scale: 1, duration: 0.8, ease: "power3.out"}
+                );
             }
+        }
+
+        // Función para reiniciar el juego
+        function resetGame() {
+            const sourceContainer = document.getElementById('source-container');
+            const items = document.querySelectorAll('.draggable-item');
+            const msg = document.getElementById('victory-message');
+            
+            // Ocultar mensaje
+            msg.style.display = 'none';
+
+            // Devolver items al origen
+            items.forEach(item => {
+                item.classList.remove('correct', 'incorrect');
+                sourceContainer.appendChild(item);
+                // Pequeña animación de "barajado"
+                gsap.from(item, {opacity: 0, y: 20, duration: 0.5, delay: Math.random() * 0.2});
+            });
         }
 
     </script>
