@@ -12,6 +12,8 @@
             --text: #ffffff;
             --accent: #4cc9f0; /* Azul cian tecnológico */
             --accent-2: #7209b7; /* Violeta profundo */
+            --success: #00ff88; /* Verde éxito */
+            --error: #ff4d4d;   /* Rojo error */
             --glass: rgba(255, 255, 255, 0.03);
         }
 
@@ -23,6 +25,7 @@
             font-family: 'Manrope', sans-serif;
             overflow-x: hidden;
             line-height: 1.8;
+            touch-action: pan-y; /* Permite scroll vertical pero no interferencias horizontales */
         }
 
         /* --- Tipografía --- */
@@ -69,9 +72,8 @@
             z-index: 1;
         }
 
-        /* --- Componentes --- */
+        /* --- Componentes Scrollytelling --- */
         
-        /* Niveles (Horizontal) */
         #niveles { display: block; overflow: hidden; }
         .levels-container {
             display: flex;
@@ -93,7 +95,6 @@
             box-shadow: 0 20px 50px rgba(0,0,0,0.5);
         }
 
-        /* Ética Slides */
         .ethics-slide {
             position: absolute;
             top: 50%; left: 50%;
@@ -118,6 +119,123 @@
             font-size: 1rem;
         }
 
+        /* --- JUEGO DRAG & DROP --- */
+        #actividad {
+            flex-direction: column;
+            padding-top: 5rem;
+            padding-bottom: 5rem;
+            background: #050505;
+        }
+
+        .game-board {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            width: 100%;
+            margin-top: 3rem;
+        }
+
+        .drop-zone {
+            background: rgba(255,255,255,0.02);
+            border: 2px dashed rgba(255,255,255,0.2);
+            border-radius: 15px;
+            padding: 2rem;
+            min-height: 300px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+        
+        .drop-zone h4 {
+            margin-bottom: 1.5rem;
+            font-size: 1.2rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            pointer-events: none; /* Evita que el texto interfiera con el drop */
+        }
+
+        .drop-zone.hovered {
+            border-color: var(--accent);
+            background: rgba(76, 201, 240, 0.05);
+            transform: scale(1.02);
+        }
+
+        .draggable-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            justify-content: center;
+            margin-bottom: 3rem;
+            min-height: 80px;
+        }
+
+        .draggable-item {
+            padding: 1rem 2rem;
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 50px;
+            cursor: grab;
+            font-weight: 600;
+            font-size: 0.9rem;
+            user-select: none;
+            touch-action: none; /* CRÍTICO para móviles */
+            transition: transform 0.1s;
+            position: relative;
+            z-index: 10;
+        }
+
+        .draggable-item:active {
+            cursor: grabbing;
+            transform: scale(1.1);
+            background: var(--accent);
+            color: black;
+            border-color: var(--accent);
+            box-shadow: 0 0 15px var(--accent);
+        }
+
+        .draggable-item.correct {
+            background: var(--success);
+            color: black;
+            border-color: var(--success);
+            cursor: default;
+        }
+
+        .draggable-item.incorrect {
+            animation: shake 0.5s;
+            background: var(--error);
+        }
+
+        @keyframes shake {
+            0% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            50% { transform: translateX(5px); }
+            75% { transform: translateX(-5px); }
+            100% { transform: translateX(0); }
+        }
+
+        /* Estilos de victoria */
+        #victory-message {
+            display: none;
+            text-align: center;
+            margin-top: 2rem;
+            animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        
+        @keyframes popIn {
+            from { transform: scale(0); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        @media (max-width: 768px) {
+            .game-board {
+                grid-template-columns: 1fr;
+            }
+            .drop-zone {
+                min-height: 150px;
+            }
+        }
+
     </style>
 </head>
 <body>
@@ -140,21 +258,18 @@
         <div class="overlay" style="background: rgba(0,0,0,0.85);"></div>
         
         <div class="container text-changer-contexto">
-            
             <div class="step step-1" style="position: absolute; opacity: 1;">
                 <h3>01. Evolución Tecnológica</h3>
                 <h2>De la Máquina de Vapor a la IA</h2>
                 <p>Tal como sucedió con la imprenta, la máquina de vapor o las telecomunicaciones, la Inteligencia Artificial emerge hoy como una "aptitud creada" por el ser humano.</p>
                 <p>Tiene la capacidad histórica de transformar profundamente nuestra civilización, redefiniendo las herramientas que usamos para mejorar nuestras aptitudes naturales.</p>
             </div>
-
             <div class="step step-2" style="position: absolute; opacity: 0; transform: translateY(50px);">
                 <h3>02. Transformación Diaria</h3>
                 <h2>Integración Total</h2>
                 <p>Desde los primeros asistentes de voz y chatbots, hasta los complejos automóviles autónomos, la IA modifica día a día cómo vivimos, trabajamos y nos comunicamos.</p>
                 <p>Ya no es ciencia ficción: se está integrando cada vez más en la estructura fundamental de nuestra rutina diaria y laboral.</p>
             </div>
-
             <div class="step step-3" style="position: absolute; opacity: 0; transform: translateY(50px);">
                 <h3>03. El Dilema</h3>
                 <h2>Sofisticación vs. Ética</h2>
@@ -166,30 +281,25 @@
 
     <section id="etica">
         <div class="overlay" style="background: radial-gradient(circle, #1a1a1a 0%, #000 100%);"></div>
-        
         <div class="container" style="position: relative; height: 100vh;">
-            
             <div class="ethics-slide slide-1">
                 <h3 style="color: #ff6b6b;">Riesgo Ético 1</h3>
                 <h2>Dignidad y Sesgos Algorítmicos</h2>
                 <p>La IA puede reforzar y amplificar inequidades sociales existentes. Un caso alarmante ocurrió con sistemas de <strong>reconocimiento facial en EE.UU.</strong>, que mostraron menos precisión para identificar personas con tonos de piel oscuros.</p>
                 <p><strong>La consecuencia:</strong> Falsos positivos que derivaron en arrestos erróneos e injustificados, vulnerando la dignidad humana. Del mismo modo, algoritmos de contratación pueden perpetuar sesgos raciales o de género si se entrenan con datos históricos sesgados.</p>
             </div>
-
             <div class="ethics-slide slide-2">
                 <h3 style="color: var(--accent);">Riesgo Ético 2</h3>
                 <h2>Autonomía y Manipulación</h2>
                 <p>La IA puede enriquecernos, pero también convertirse en un sistema manipulador a través de la tecnología persuasiva. Los algoritmos de redes sociales suelen mostrarnos solo contenidos que refuerzan nuestras creencias.</p>
                 <p><strong>El efecto "Filtro Burbuja":</strong> Esto nos oculta puntos de vista opuestos, creando visiones cortas y sesgadas que limitan nuestra exposición a ideas diversas, dificultando la toma de decisiones libre e informada.</p>
             </div>
-
             <div class="ethics-slide slide-3">
                 <h3 style="color: #51cf66;">Propósito Ético</h3>
                 <h2>El Bien Común y la Salud</h2>
                 <p>La IA debe diseñarse para buscar el "bien mayor" que alcance a más personas, no solo a intereses privados. Un ejemplo prometedor es su aplicación en <strong>sistemas de salud</strong>.</p>
                 <p>Tiene el potencial de reducir costos drásticamente e incrementar el acceso a servicios médicos para más gente. Sin embargo, esto debe hacerse priorizando estrictamente la privacidad y confidencialidad de los pacientes.</p>
             </div>
-
         </div>
     </section>
 
@@ -199,12 +309,10 @@
                 <h3>Definición Técnica</h3>
                 <h2>La Clave es el <span class="highlight">Aprendizaje</span></h2>
                 <p>La diferencia radical con el cómputo tradicional radica en una palabra: <strong>"Aprendizaje"</strong>. Mientras el software clásico sigue reglas fijas del programador, la IA usa estructuras (Redes Neuronales) que se entrenan con datos.</p>
-                
                 <div class="data-box">
                     <strong>Dato Técnico 1: El Cerebro de GPT-3</strong><br>
                     Este sistema contiene <strong>175 mil millones de valores</strong> (parámetros) en sus matrices numéricas.
                 </div>
-
                 <div class="data-box" style="border-color: var(--accent-2); background: rgba(114, 9, 183, 0.08);">
                     <strong>Dato Técnico 2: Poder de Cómputo</strong><br>
                     Para entrenar este modelo se requirieron <strong>314 millones de petaFLOPs</strong> (operaciones de punto flotante). Una capacidad de procesamiento masiva.
@@ -229,14 +337,12 @@
                 <h3 style="margin-top: 0;">IA Especializada (ANI)</h3>
                 <p><strong>Diseñada para una función específica.</strong> Es la única que existe hoy (ej. jugar Go, reconocimiento facial, traductores). Puede vencer a los mejores humanos en su disciplina específica, pero es incapaz de distinguir un perro de un gato si no fue diseñada para ello.</p>
             </div>
-            
             <div class="level-card" style="border-color: var(--accent);">
                 <h1 style="color: rgba(76, 201, 240, 0.1); margin-bottom: 0;">02</h1>
                 <h3 style="margin-top: 0;">IA General (IAG)</h3>
                 <p><strong>Emulación Humana Completa.</strong> Este tipo podría llevar a cabo diversas tareas como un humano: reconocer rostros, entender lenguaje natural, mantener una conversación, contar chistes y resolver problemas nuevos.</p>
                 <p style="font-size: 0.9rem; opacity: 0.7; margin-top: 1rem;">* Este nivel NO existe aún y no sabemos cuánto falta para lograrlo.</p>
             </div>
-
             <div class="level-card" style="border-color: var(--accent-2);">
                 <h1 style="color: rgba(114, 9, 183, 0.1); margin-bottom: 0;">03</h1>
                 <h3 style="margin-top: 0;">Superinteligencia</h3>
@@ -251,7 +357,6 @@
             <h3 style="text-align: center;">Regulación</h3>
             <h2 style="text-align: center; margin-bottom: 4rem;">Marcos de Referencia Éticos</h2>
             <p style="text-align: center; margin-bottom: 3rem; max-width: 100%;">Principios propuestos por la UNESCO, la Unión Europea y la NASA:</p>
-            
             <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem;">
                 <div style="padding: 2rem; border: 1px solid rgba(255,255,255,0.1); border-radius: 12px;">✅ Respeto a los Derechos Humanos y dignidad.</div>
                 <div style="padding: 2rem; border: 1px solid rgba(255,255,255,0.1); border-radius: 12px;">🌳 Cuidado del medioambiente y sostenibilidad.</div>
@@ -259,6 +364,40 @@
                 <div style="padding: 2rem; border: 1px solid rgba(255,255,255,0.1); border-radius: 12px;">🔒 Derecho a la privacidad y protección de datos.</div>
                 <div style="padding: 2rem; border: 1px solid rgba(255,255,255,0.1); border-radius: 12px;">📢 Transparencia y explicabilidad (Caja negra).</div>
                 <div style="padding: 2rem; border: 1px solid rgba(255,255,255,0.1); border-radius: 12px;">🛡️ Seguridad y responsabilidad compartida.</div>
+            </div>
+        </div>
+    </section>
+
+    <section id="actividad">
+        <div class="container" style="text-align: center;">
+            <h3>Evaluación Interactiva</h3>
+            <h2>Conecta el Concepto</h2>
+            <p>Arrastra los conceptos de arriba a su categoría correcta abajo.</p>
+
+            <div class="draggable-container">
+                <div class="draggable-item" data-category="riesgo">Sesgos Raciales</div>
+                <div class="draggable-item" data-category="nivel">ANI (Especializada)</div>
+                <div class="draggable-item" data-category="futuro">Ecosistemas Humanos</div>
+                <div class="draggable-item" data-category="riesgo">Filtros Burbuja</div>
+                <div class="draggable-item" data-category="nivel">Superinteligencia</div>
+                <div class="draggable-item" data-category="futuro">Ocio Creativo</div>
+            </div>
+
+            <div class="game-board">
+                <div class="drop-zone" data-category="nivel">
+                    <h4 style="color: var(--accent);">Niveles de IA</h4>
+                </div>
+                <div class="drop-zone" data-category="riesgo">
+                    <h4 style="color: #ff6b6b;">Riesgos Éticos</h4>
+                </div>
+                <div class="drop-zone" data-category="futuro">
+                    <h4 style="color: #51cf66;">Futuro Positivo</h4>
+                </div>
+            </div>
+
+            <div id="victory-message">
+                <h2 style="color: var(--success);">¡Excelente! 🎉</h2>
+                <p>Has comprendido perfectamente los desafíos y oportunidades de la IA.</p>
             </div>
         </div>
     </section>
@@ -293,7 +432,6 @@
         </div>
     </section>
 
-
     <script src="https://unpkg.com/gsap@3.12.5/dist/gsap.min.js"></script>
     <script src="https://unpkg.com/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
     <script src="https://unpkg.com/lenis@1.0.45/dist/lenis.min.js"></script>
@@ -301,54 +439,35 @@
     <script>
         gsap.registerPlugin(ScrollTrigger);
 
-        // 1. SCROLL SUAVE
+        // --- 1. CONFIGURACIÓN SCROLL ---
         const lenis = new Lenis({
             duration: 1.5,
             easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
             smooth: true
         });
-
         lenis.on('scroll', ScrollTrigger.update);
         gsap.ticker.add((time) => lenis.raf(time * 1000));
         gsap.ticker.lagSmoothing(0);
 
-        // 2. ANIMACIONES
+        // --- 2. ANIMACIONES SCROLLYTELLING ---
+        
+        // Hero
+        gsap.from(".anim-hero", { y: 50, opacity: 0, duration: 1.5, stagger: 0.2, ease: "power3.out", delay: 0.5 });
 
-        // A. HERO
-        gsap.from(".anim-hero", {
-            y: 50, opacity: 0, duration: 1.5, stagger: 0.2, ease: "power3.out", delay: 0.5
-        });
-
-        // B. CONTEXTO HISTÓRICO
+        // Contexto
         const tlContext = gsap.timeline({
-            scrollTrigger: {
-                trigger: "#contexto",
-                start: "top top",
-                end: "+=4000",
-                pin: true,
-                scrub: 1,
-                anticipatePin: 1
-            }
+            scrollTrigger: { trigger: "#contexto", start: "top top", end: "+=4000", pin: true, scrub: 1, anticipatePin: 1 }
         });
-
         tlContext
             .to(".step-1", { opacity: 0, y: -50, duration: 2 })
             .to(".step-2", { opacity: 1, y: 0, duration: 2 })
             .to(".step-2", { opacity: 0, y: -50, duration: 2, delay: 1.5 })
             .to(".step-3", { opacity: 1, y: 0, duration: 2 });
 
-
-        // C. ÉTICA (AHORA DESPUÉS DEL CONTEXTO)
+        // Ética
         const tlEthics = gsap.timeline({
-            scrollTrigger: {
-                trigger: "#etica",
-                start: "top top",
-                end: "+=5000",
-                pin: true,
-                scrub: true
-            }
+            scrollTrigger: { trigger: "#etica", start: "top top", end: "+=5000", pin: true, scrub: true }
         });
-
         tlEthics
             .to(".slide-1", { opacity: 1, scale: 1, duration: 2 })
             .to(".slide-1", { opacity: 0, scale: 0.9, filter: "blur(5px)", duration: 2, delay: 4 })
@@ -356,8 +475,7 @@
             .to(".slide-2", { opacity: 0, scale: 0.9, filter: "blur(5px)", duration: 2, delay: 4 })
             .to(".slide-3", { opacity: 1, scale: 1, duration: 2 });
 
-
-        // D. NIVELES (Horizontal)
+        // Niveles (Horizontal)
         const sectionsContainer = document.querySelector(".levels-container");
         gsap.to(sectionsContainer, {
             x: () => -(sectionsContainer.scrollWidth - window.innerWidth),
@@ -371,6 +489,156 @@
                 invalidateOnRefresh: true
             }
         });
+
+        // --- 3. LÓGICA DEL JUEGO DRAG AND DROP (Universal: Touch & Mouse) ---
+        
+        const draggables = document.querySelectorAll('.draggable-item');
+        const dropZones = document.querySelectorAll('.drop-zone');
+        let activeItem = null;
+        let originalParent = null;
+
+        // Función para inicializar eventos
+        draggables.forEach(item => {
+            // Eventos Mouse
+            item.addEventListener('mousedown', startDrag);
+            // Eventos Touch (Móvil)
+            item.addEventListener('touchstart', startDrag, {passive: false});
+        });
+
+        function startDrag(e) {
+            if (e.target.classList.contains('correct')) return; // Ya no se puede mover si está correcto
+            e.preventDefault(); // Evitar scroll en touch
+
+            activeItem = e.target;
+            
+            // Posición inicial para calcular movimiento
+            const touch = e.touches ? e.touches[0] : e;
+            const rect = activeItem.getBoundingClientRect();
+            
+            // Diferencia entre el toque y la esquina del elemento
+            activeItem.offsetX = touch.clientX - rect.left;
+            activeItem.offsetY = touch.clientY - rect.top;
+
+            // Preparar elemento para moverse libremente
+            activeItem.style.position = 'fixed';
+            activeItem.style.zIndex = '1000';
+            activeItem.style.width = rect.width + 'px'; // Mantener tamaño
+            
+            moveAt(touch.clientX, touch.clientY);
+
+            // Añadir listeners globales para mover y soltar
+            document.addEventListener('mousemove', onMove);
+            document.addEventListener('mouseup', onStop);
+            document.addEventListener('touchmove', onMove, {passive: false});
+            document.addEventListener('touchend', onStop);
+        }
+
+        function moveAt(pageX, pageY) {
+            if (!activeItem) return;
+            activeItem.style.left = pageX - activeItem.offsetX + 'px';
+            activeItem.style.top = pageY - activeItem.offsetY + 'px';
+        }
+
+        function onMove(e) {
+            e.preventDefault();
+            const touch = e.touches ? e.touches[0] : e;
+            moveAt(touch.clientX, touch.clientY);
+            
+            // Detectar hover sobre zona (feedback visual)
+            activeItem.style.visibility = 'hidden'; // Ocultar temp para ver qué hay debajo
+            let elemBelow = document.elementFromPoint(touch.clientX, touch.clientY);
+            activeItem.style.visibility = 'visible';
+
+            if (!elemBelow) return;
+
+            let dropZone = elemBelow.closest('.drop-zone');
+            
+            // Limpiar hovers anteriores
+            dropZones.forEach(zone => zone.classList.remove('hovered'));
+            if (dropZone) {
+                dropZone.classList.add('hovered');
+            }
+        }
+
+        function onStop(e) {
+            // Limpiar listeners
+            document.removeEventListener('mousemove', onMove);
+            document.removeEventListener('mouseup', onStop);
+            document.removeEventListener('touchmove', onMove);
+            document.removeEventListener('touchend', onStop);
+
+            if (!activeItem) return;
+
+            const touch = e.changedTouches ? e.changedTouches[0] : e;
+            
+            // Detectar dónde se soltó
+            activeItem.style.visibility = 'hidden';
+            let elemBelow = document.elementFromPoint(touch.clientX, touch.clientY);
+            activeItem.style.visibility = 'visible';
+            
+            let dropZone = elemBelow ? elemBelow.closest('.drop-zone') : null;
+            dropZones.forEach(zone => zone.classList.remove('hovered'));
+
+            // Lógica de validación
+            if (dropZone) {
+                const itemCategory = activeItem.getAttribute('data-category');
+                const zoneCategory = dropZone.getAttribute('data-category');
+
+                if (itemCategory === zoneCategory) {
+                    // CORRECTO
+                    successDrop(activeItem, dropZone);
+                } else {
+                    // INCORRECTO
+                    returnToStart(activeItem);
+                }
+            } else {
+                // SOLTADO EN LA NADA
+                returnToStart(activeItem);
+            }
+            
+            activeItem = null;
+        }
+
+        function successDrop(item, zone) {
+            // Resetear estilos fijos
+            item.style.position = 'static';
+            item.style.zIndex = '10';
+            item.style.width = 'auto';
+            item.classList.add('correct');
+            
+            // Mover al DOM de la zona
+            zone.appendChild(item);
+            
+            // Animación de éxito
+            gsap.from(item, {scale: 0.5, duration: 0.3, ease: "back.out(1.7)"});
+
+            checkVictory();
+        }
+
+        function returnToStart(item) {
+            item.classList.add('incorrect');
+            
+            // Regresar a posición original (simulado visualmente)
+            // Para simplificar, reseteamos estilos y el DOM lo vuelve a poner en su lugar
+            item.style.position = 'static';
+            item.style.zIndex = '10';
+            item.style.width = 'auto';
+
+            setTimeout(() => {
+                item.classList.remove('incorrect');
+            }, 500);
+        }
+
+        function checkVictory() {
+            const totalItems = 6; // Total de elementos
+            const correctItems = document.querySelectorAll('.draggable-item.correct').length;
+            
+            if (correctItems === totalItems) {
+                document.getElementById('victory-message').style.display = 'block';
+                // Confeti simple con GSAP (opcional)
+                gsap.to("#victory-message", {y: -10, repeat: -1, yoyo: true, duration: 0.5});
+            }
+        }
 
     </script>
 </body>
