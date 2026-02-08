@@ -456,13 +456,13 @@
 
         // Contexto
         const tlContext = gsap.timeline({
-            scrollTrigger: { trigger: "#contexto", start: "top top", end: "+=4000", pin: true, scrub: 1, anticipatePin: 1 }
+            scrollTrigger: { trigger: "#contexto", start: "top top", end: "+=7000", pin: true, scrub: 1, anticipatePin: 1 }
         });
         tlContext
-            .to(".step-1", { opacity: 0, y: -50, duration: 2 })
-            .to(".step-2", { opacity: 1, y: 0, duration: 2 })
-            .to(".step-2", { opacity: 0, y: -50, duration: 2, delay: 1.5 })
-            .to(".step-3", { opacity: 1, y: 0, duration: 2 });
+            .to(".step-1", { opacity: 0, y: -50, duration: 6 }) 
+            .to(".step-2", { opacity: 1, y: 0, duration: 6 }, "-=2")
+            .to(".step-2", { opacity: 0, y: -50, duration: 6, delay: 5 })
+            .to(".step-3", { opacity: 1, y: 0, duration: 6 }, "-=2");
 
         // Ética
         const tlEthics = gsap.timeline({
