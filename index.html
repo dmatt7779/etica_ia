@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -34,15 +35,14 @@
         .highlight { color: var(--accent); }
 
         /* --- Estructura SCROLLYTELLING --- */
-        /* Cada sección ocupa toda la pantalla y se "fijará" */
         section {
             width: 100%;
-            height: 100vh;
+            min-height: 100vh; /* Usamos min-height para evitar cortes */
             position: relative;
             display: flex;
             align-items: center;
             justify-content: center;
-            overflow: hidden;
+            /* Quitamos overflow: hidden global para que el pin funcione mejor */
             padding: 0 5vw;
         }
 
@@ -73,15 +73,24 @@
         /* --- Componentes Específicos --- */
         
         /* Sección Niveles (Horizontal Scroll) */
+        #niveles {
+            display: block; /* Importante para el pin horizontal */
+            overflow: hidden;
+        }
+
         .levels-container {
             display: flex;
             gap: 5vw;
-            width: 300%; /* Muy ancho para scroll horizontal */
+            width: fit-content; /* Se adapta al contenido */
             padding-left: 5vw;
+            padding-right: 10vw;
+            height: 100vh;
+            align-items: center;
         }
         .level-card {
             width: 80vw;
             max-width: 600px;
+            flex-shrink: 0; /* Evita que se encojan */
             background: rgba(20,20,20,0.8);
             border: 1px solid rgba(255,255,255,0.1);
             padding: 4rem;
@@ -98,8 +107,11 @@
             text-align: center;
             opacity: 0; /* Invisible por defecto */
             pointer-events: none;
+            background: rgba(0,0,0,0.6); /* Fondo semi-transparente para legibilidad */
+            padding: 2rem;
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
         }
-        .ethics-slide.active { opacity: 1; pointer-events: all; }
 
         /* Quotes */
         blockquote {
@@ -151,7 +163,7 @@
     </section>
 
     <section id="definicion" style="background: #0a0a0a;">
-        <div class="container" style="display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center;">
+        <div class="container" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 4rem; align-items: center;">
             <div>
                 <h3>Definición Técnica</h3>
                 <h2>Más que Código:<br><span class="highlight">Aprendizaje</span></h2>
@@ -170,10 +182,11 @@
         </div>
     </section>
 
-    <section id="niveles" style="overflow: hidden;">
+    <section id="niveles">
         <div style="position: absolute; top: 10vh; left: 5vw; z-index: 5;">
             <h3>Clasificación</h3>
             <h2>Los 3 Niveles de Inteligencia</h2>
+            <p style="font-size: 0.9rem; opacity: 0.6;">(Sigue bajando para deslizar)</p>
         </div>
         
         <div class="levels-container">
@@ -217,4 +230,141 @@
             <div class="ethics-slide slide-3">
                 <h1 style="font-size: 5rem;">🌍</h1>
                 <h2>3. El Bien Común</h2>
-                <p>La IA debe
+                <p>La IA debe buscar el "bien mayor". Ejemplo positivo: Sistemas de salud que reducen costos y aumentan el acceso, siempre que cuiden la privacidad.</p>
+            </div>
+
+        </div>
+    </section>
+
+    <section id="marcos" style="height: auto; padding: 10rem 5vw;">
+        <div class="container">
+            <h2>Marcos de Referencia</h2>
+            <p style="margin-bottom: 3rem;">Propuestos por UNESCO, Unión Europea y NASA:</p>
+            
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem;">
+                <div style="border-top: 1px solid white; padding-top: 1rem;">✅ Respeto a DDHH y Dignidad</div>
+                <div style="border-top: 1px solid white; padding-top: 1rem;">🌳 Cuidado del medioambiente</div>
+                <div style="border-top: 1px solid white; padding-top: 1rem;">⚖️ Evitar sesgos discriminatorios</div>
+                <div style="border-top: 1px solid white; padding-top: 1rem;">🔒 Privacidad y protección de datos</div>
+                <div style="border-top: 1px solid white; padding-top: 1rem;">📢 Transparencia y explicabilidad</div>
+            </div>
+        </div>
+    </section>
+
+    <section id="futuro">
+        <img src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=2072&auto=format&fit=crop" class="bg-image" style="opacity: 0.2;" alt="Future Earth">
+        <div class="container" style="text-align: center;">
+            <h3>Visión de Futuro</h3>
+            <h2 style="font-size: clamp(3rem, 6vw, 6rem);">¿Egosistemas o <span class="highlight" style="color: #4cc9f0;">Ecosistemas</span>?</h2>
+            
+            <div style="display: flex; justify-content: center; gap: 4rem; margin-top: 4rem; flex-wrap: wrap;">
+                <div style="flex: 1; min-width: 300px; text-align: right; border-right: 1px solid gray; padding-right: 2rem;">
+                    <h4 style="color: #ff4d4d;">Escenario Negativo</h4>
+                    <p style="margin-left: auto;">Continuar con "egosistemas" que empeoren nuestra situación a grados extremos.</p>
+                </div>
+                <div style="flex: 1; min-width: 300px; text-align: left; padding-left: 2rem;">
+                    <h4 style="color: #4cc9f0;">Escenario Positivo (Asimov)</h4>
+                    <p style="margin-right: auto;">La tecnología cubre necesidades básicas, permitiendo tiempo de ocio para la educación y el crecimiento humano.</p>
+                </div>
+            </div>
+
+            <blockquote style="margin-top: 5rem; border: none; font-size: 1.5rem;">
+                "Participar activamente en la ética de la IA asegura un futuro sustentable para todos."
+            </blockquote>
+            
+            <footer style="margin-top: 5rem; font-size: 0.8rem; opacity: 0.5;">
+                Basado en el texto: "El poder de internet y la industria digital" - Universidad Iberoamericana<br>
+                Licenciatura en Ingeniería en Ciencia de Datos
+            </footer>
+        </div>
+    </section>
+
+
+    <script src="https://unpkg.com/gsap@3.12.5/dist/gsap.min.js"></script>
+    <script src="https://unpkg.com/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+    <script src="https://unpkg.com/lenis@1.0.45/dist/lenis.min.js"></script>
+
+    <script>
+        // 1. REGISTRO DE PLUGINS
+        gsap.registerPlugin(ScrollTrigger);
+
+        // 2. CONFIGURACIÓN DEL SCROLL SUAVE (LENIS)
+        // Esta configuración asegura la comunicación entre el scroll suave y las animaciones
+        const lenis = new Lenis({
+            duration: 1.5,
+            easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+            smooth: true
+        });
+
+        lenis.on('scroll', ScrollTrigger.update);
+
+        gsap.ticker.add((time) => {
+            lenis.raf(time * 1000);
+        });
+
+        gsap.ticker.lagSmoothing(0);
+
+        // 3. ANIMACIONES
+
+        // A. HERO
+        gsap.from(".anim-hero", {
+            y: 50, opacity: 0, duration: 1.5, stagger: 0.2, ease: "power3.out", delay: 0.5
+        });
+
+        // B. CONTEXTO HISTÓRICO (Pinned Sequence)
+        const tlContext = gsap.timeline({
+            scrollTrigger: {
+                trigger: "#contexto",
+                start: "top top",
+                end: "+=2000",
+                pin: true,
+                scrub: 1,
+                anticipatePin: 1
+            }
+        });
+
+        tlContext
+            .to(".step-1", { opacity: 0, y: -50, duration: 1 }) 
+            .to(".step-2", { opacity: 1, y: 0, duration: 1 })
+            .to(".step-2", { opacity: 0, y: -50, duration: 1, delay: 0.5 }) 
+            .to(".step-3", { opacity: 1, y: 0, duration: 1 });
+
+
+        // C. NIVELES (Horizontal Scroll)
+        // Calculamos el movimiento horizontal basado en el ancho real
+        const sectionsContainer = document.querySelector(".levels-container");
+        
+        gsap.to(sectionsContainer, {
+            x: () => -(sectionsContainer.scrollWidth - window.innerWidth),
+            ease: "none",
+            scrollTrigger: {
+                trigger: "#niveles",
+                pin: true,
+                scrub: 1,
+                start: "top top",
+                end: () => "+=" + sectionsContainer.scrollWidth,
+                invalidateOnRefresh: true
+            }
+        });
+
+        // D. ÉTICA (Tarjetas apiladas)
+        const tlEthics = gsap.timeline({
+            scrollTrigger: {
+                trigger: "#etica",
+                start: "top top",
+                end: "+=3000",
+                pin: true,
+                scrub: true
+            }
+        });
+
+        tlEthics
+            .to(".slide-1", { opacity: 1, scale: 1, duration: 1 })
+            .to(".slide-1", { opacity: 0, scale: 0.8, filter: "blur(10px)", duration: 1, delay: 1 })
+            .to(".slide-2", { opacity: 1, scale: 1, duration: 1 })
+            .to(".slide-2", { opacity: 0, scale: 0.8, filter: "blur(10px)", duration: 1, delay: 1 })
+            .to(".slide-3", { opacity: 1, scale: 1, duration: 1 });
+
+    </script>
+</body>
+</html>
